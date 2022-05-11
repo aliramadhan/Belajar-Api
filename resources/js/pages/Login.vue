@@ -11,25 +11,24 @@
                     <div class="card-header">Login</div>
                     <div class="card-body">
                         <form>
-                            <div class="form-group row">
+                            <div class="row mb-3">
                                 <label for="email" class="col-sm-4 col-form-label text-md-right">E-Mail Address</label>
                                 <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control" v-model="email" required
-                                           autofocus autocomplete="off">
+                                    <input id="email" type="email" class="form-control" v-model="email" required autocomplete="email" autofocus placeholder="Email">
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="row mb-3">
                                 <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+
                                 <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control" v-model="password"
-                                           required autocomplete="off">
+                                    <input id="password" type="password" class="form-control" v-model="password" required autocomplete="current-password" placeholder="******************">
                                 </div>
                             </div>
 
-                            <div class="form-group row mb-0">
+                            <div class="row mb-0">
                                 <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-primary" @click="handleSubmit">
+                                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded" @click="handleSubmit">
                                         Login
                                     </button>
                                 </div>

@@ -1,26 +1,50 @@
 <template>
-    <div class="container">
-        <div class="text-center" style="margin: 20px 0px 20px 0px;">
-            <a href="https://shouts.dev/" target="_blank"><img src="https://i.imgur.com/Nt3kJXa.png"></a><br>
-            <span class="text-secondary">Laravel SPA with Vue 3, Auth (Sanctum), CURD Example</span>
-        </div>
+    <div id="app">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+            <div class="container">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav me-auto">
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="collapse navbar-collapse">
-                <!-- for logged-in user-->
-                <div class="navbar-nav" v-if="isLoggedIn">
-                    <router-link to="/dashboard" class="nav-item nav-link">Dashboard</router-link>
-                    <router-link to="/books" class="nav-item nav-link">Books</router-link>
-                    <a class="nav-item nav-link" style="cursor: pointer;" @click="logout">Logout</a>
+                    </ul>
+
+                    <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav ms-auto">
+
+                        <!-- for logged-in user-->
+                        <div class="navbar-nav" v-if="isLoggedIn">
+                            <li class="nav-item">
+                                <router-link to="/dashboard" class="nav-link">Dashboard</router-link>
+                            </li>
+                            <li class="nav-item">
+                                <router-link to="/books" class="nav-link">Books</router-link>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ name }}</a>
+
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item cursor-pointer" @click="logout">Logout</a>
+                                </div>
+                            </li>
+                        </div>
+                        <!-- for non-logged user-->
+                        <div class="navbar-nav" v-else>
+                            <li class="nav-item">
+                                <router-link to="/" class="nav-link">Home</router-link>
+                            </li>
+                            <li class="nav-item">
+                                <router-link to="/login" class="nav-link">Login</router-link>
+                            </li>
+                            <li class="nav-item">
+                                <router-link to="/register" class="nav-link">Register</router-link>
+                            </li>
+                            <li class="nav-item">
+                                <router-link to="/about" class="nav-link">About</router-link>
+                            </li>
+                        </div>
+                    </ul>
                 </div>
-                <!-- for non-logged user-->
-                <div class="navbar-nav" v-else>
-                    <router-link to="/" class="nav-item nav-link">Home</router-link>
-                    <router-link to="/login" class="nav-item nav-link">login</router-link>
-                    <router-link to="/register" class="nav-item nav-link">Register
-                    </router-link>
-                    <router-link to="/about" class="nav-item nav-link">About</router-link>
-                </div>
+
             </div>
         </nav>
         <br/>
@@ -34,11 +58,13 @@ export default {
     data() {
         return {
             isLoggedIn: false,
+            name: 'asd',
         }
     },
     created() {
         if (window.Laravel.isLoggedin) {
-            this.isLoggedIn = true
+            this.isLoggedIn = true,
+            this.name = window.Laravel.user.name;
         }
     },
     methods: {

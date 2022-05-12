@@ -2,11 +2,9 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-
                 <div class="alert alert-danger" role="alert" v-if="error !== null">
                     {{ error }}
                 </div>
-
                 <div class="card card-default">
                     <div class="card-header">Login</div>
                     <div class="card-body">
@@ -15,6 +13,9 @@
                                 <label for="email" class="col-sm-4 col-form-label text-md-right">E-Mail Address</label>
                                 <div class="col-md-6">
                                     <input id="email" type="email" class="form-control" v-model="email" required autocomplete="email" autofocus placeholder="Email">
+                                    <div class="text-red-500 text-xs italic" role="alert" v-if="errors.email">
+                                        {{ errors.email[0] }}
+                                    </div>
                                 </div>
                             </div>
 
@@ -23,6 +24,9 @@
 
                                 <div class="col-md-6">
                                     <input id="password" type="password" class="form-control" v-model="password" required autocomplete="current-password" placeholder="******************">
+                                    <div class="text-red-500 text-xs italic" role="alert" v-if="errors.password">
+                                        {{ errors.password[0] }}
+                                    </div>
                                 </div>
                             </div>
 
@@ -47,31 +51,30 @@ export default {
         return {
             email: "",
             password: "",
-            error: null
+            error: null,
+            errors: []
         }
     },
     methods: {
         handleSubmit(e) {
             e.preventDefault()
-            if (this.password.length > 0) {
-                this.$axios.get('/sanctum/csrf-cookie').then(response => {
-                    this.$axios.post('api/login', {
-                        email: this.email,
-                        password: this.password
-                    })
-                        .then(response => {
-                            console.log(response.data)
-                            if (response.data.success) {
-                                this.$router.go('/dashboard')
-                            } else {
-                                this.error = response.data.message
-                            }
-                        })
-                        .catch(function (error) {
-                            console.error(error);
-                        });
+            this.$axios.get('/sanctum/csrf-cookie').then(response => {
+                this.$axios.post('api/login', {
+                    email: this.email,
+                    password: this.password
                 })
-            }
+                    .then(response => {
+                        if (response.data.success) {
+                            this.$router.go('/dashboard')
+                        } else {
+                            this.errors = response.data.errors;
+                            this.error = response.data.message;
+                        }
+                    })
+                    .catch(function (error) {
+                        console.error(error);
+                    });
+            })
         }
     },
     beforeRouteEnter(to, from, next) {

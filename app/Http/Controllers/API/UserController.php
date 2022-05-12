@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Session;
 use App\Models\User;
+use Validator;
 
 class UserController extends Controller
 {
@@ -17,6 +18,18 @@ class UserController extends Controller
     public function register(Request $request)
     {
         try {
+            $validator = Validator::make($request->all(), [ 
+                'name' => 'required',
+                'email' => 'required|email|unique:users',
+                'password' => 'required|min:6'
+            ]);
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => null,
+                    'errors' => $validator->errors()
+                ]);
+            }
             $user = new User();
             $user->name = $request->name;
             $user->email = $request->email;
@@ -27,13 +40,14 @@ class UserController extends Controller
             $message = 'User register successfully';
         } catch (\Illuminate\Database\QueryException $ex) {
             $success = false;
-            $message = $ex->getMessage();
+            $message = [$ex->getMessage()];
         }
 
         // response
         $response = [
             'success' => $success,
             'message' => $message,
+            'errors' => [],
         ];
         return response()->json($response);
     }
@@ -47,19 +61,31 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => $request->password,
         ];
+        $validator = Validator::make($request->all(), [ 
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => null,
+                'errors' => $validator->errors(),
+            ]);
+        }
 
         if (Auth::attempt($credentials)) {
             $success = true;
             $message = 'User login successfully';
         } else {
             $success = false;
-            $message = 'Unauthorised';
+            $message = 'Invalid Credentials.';
         }
 
         // response
         $response = [
             'success' => $success,
             'message' => $message,
+            'errors' => [],
         ];
         return response()->json($response);
     }

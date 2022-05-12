@@ -48,7 +48,11 @@
 
             </div>
         </nav>
-        <router-view class="py-4"/>
+        <div class="py-4">
+            <div class="w-full max-w-screen-xl mx-auto px-6">
+                <router-view/>
+            </div>
+        </div>
     </div>
 </template>
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Book;
+use Validator;
 
 class BookController extends Controller
 {
@@ -18,6 +19,19 @@ class BookController extends Controller
     // add book
     public function add(Request $request)
     {
+        $validator = Validator::make($request->all(), [ 
+            'name' => 'required|unique:books',
+            'author' => 'required',
+        ],[
+            'name.required' => 'The Book name field is required.',
+            'name.unique' => 'The Book name has already been taken.',
+            'author.required' => 'The Author name field is required.'
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors(),
+            ],201);
+        }
         $book = new Book([
             'name' => $request->name,
             'author' => $request->author

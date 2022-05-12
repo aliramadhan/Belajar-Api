@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <h4 class="text-center">All Books</h4><br/>
-        <table class="table table-bordered">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead>
             <tr>
                 <th>ID</th>
@@ -13,6 +13,13 @@
             </tr>
             </thead>
             <tbody>
+            <tr v-if="!books.length" class="text-center">
+                <td colspan="6">
+                    <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                      <div class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" :style="ProgressCount"> {{ timerCount }}%</div>
+                    </div>
+                </td>
+            </tr>
             <tr v-for="book in books" :key="book.id">
                 <td>{{ book.id }}</td>
                 <td>{{ book.name }}</td>
@@ -38,8 +45,25 @@
 export default {
     data() {
         return {
-            books: []
+            books: [],
+            timerCount: 1,
         }
+    },
+    watch: {
+
+        timerCount: {
+            handler(value) {
+
+                if (value < 100) {
+                    setTimeout(() => {
+                        this.timerCount+=10;
+                    }, 500);
+                }
+
+            },
+            immediate: true // This ensures the watcher is triggered upon creation
+        }
+
     },
     created() {
         this.$axios.get('/sanctum/csrf-cookie').then(response => {
@@ -64,6 +88,13 @@ export default {
                         console.error(error);
                     });
             })
+        }
+    },
+    computed:{
+        ProgressCount(){
+            return{
+                'width': this.timerCount+'%'
+            }
         }
     },
     beforeRouteEnter(to, from, next) {

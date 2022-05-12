@@ -76,9 +76,14 @@ class UserController extends Controller
         if (Auth::attempt($credentials)) {
             $success = true;
             $message = 'User login successfully';
+
+            $user = User::where('email', $request['email'])->firstOrFail();
+
+            $token = $user->createToken('auth_token')->plainTextToken;
         } else {
             $success = false;
             $message = 'Invalid Credentials.';
+            $token = '';
         }
 
         // response
@@ -86,6 +91,8 @@ class UserController extends Controller
             'success' => $success,
             'message' => $message,
             'errors' => [],
+            'access_token' => $token,
+            'token_type' => 'Bearer',
         ];
         return response()->json($response);
     }
@@ -96,6 +103,7 @@ class UserController extends Controller
     public function logout()
     {
         try {
+            auth()->user()->tokens()->delete();
             Session::flush();
             $success = true;
             $message = 'Successfully logged out';

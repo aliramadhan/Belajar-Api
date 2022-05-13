@@ -39,7 +39,8 @@ export const routes = [
     {
         name: 'books',
         path: '/books',
-        component: Books
+        component: Books,
+        props: true
     },
     {
         name: 'addbook',

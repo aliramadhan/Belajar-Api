@@ -1,21 +1,24 @@
 <template>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <h4 class="text-center">All Books</h4><br/>
-        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead>
+        <div v-if="!success">
+            {{success}}
+        </div>
+        <table class="min-w-full">
+            <thead class="bg-white border-b">
             <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Author</th>
-                <th>Created At</th>
-                <th>Updated At</th>
-                <th>Actions</th>
+                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">ID</th>
+                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Name</th>
+                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Author</th>
+                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Created At</th>
+                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Updated At</th>
+                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Actions</th>
             </tr>
             </thead>
             <tbody>
-            <tr v-if="!books.length" class="text-center">
-                <td colspan="6">
-                    <button type="button" class="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-indigo-500 hover:bg-indigo-400 transition ease-in-out duration-150 cursor-not-allowed" disabled>
+            <tr v-if="!books.length" class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
+                <td colspan="6" class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                    <button type="button" class="flex mx-auto items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-indigo-500 hover:bg-indigo-400 transition ease-in-out duration-150 cursor-not-allowed" disabled>
                       <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -24,13 +27,13 @@
                     </button>
                 </td>
             </tr>
-            <tr v-for="book in books" :key="book.id">
-                <td>{{ book.id }}</td>
-                <td>{{ book.name }}</td>
-                <td>{{ book.author }}</td>
-                <td>{{ book.created_at }}</td>
-                <td>{{ book.updated_at }}</td>
-                <td>
+            <tr v-for="book in books" :key="book.id" class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ book.id }}</td>
+                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ book.name }}</td>
+                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ book.author }}</td>
+                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ moment(book.created_at).format('MMMM DD YYYY') }}</td>
+                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ moment(book.updated_at).format('MMMM DD YYYY') }}</td>
+                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                     <div class="btn-group" role="group">
                         <router-link :to="{name: 'editbook', params: { id: book.id }}" class="btn btn-primary">Edit
                         </router-link>
@@ -46,10 +49,13 @@
 </template>
 
 <script>
+import moment from 'moment';
 export default {
+    props: ["success"],
     data() {
         return {
             books: [],
+            moment: moment
         }
     },
     created() {

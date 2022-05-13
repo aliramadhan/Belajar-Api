@@ -54,12 +54,11 @@ export default {
                 this.$axios.post('/api/books/add', this.book)
                     .then(response => {
                         if (response.status === 200) {
-                            this.$router.push({name: 'books'})
+                            this.$router.push({name: 'books', params: { success: "Air-conditioning" }});
                         }
                         else{
                             this.errors = response.data.errors;
                         }
-                        console.log(response);
                     })
                     .catch(function (error) {
                         console.error(error);

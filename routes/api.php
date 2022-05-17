@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\BookController;
+use App\Http\Controllers\API\DesignDemoController;
 use App\Http\Controllers\API\UserController;
 
 /*
@@ -26,6 +27,13 @@ Route::group(['prefix' => 'books', 'middleware' => 'auth:sanctum'], function () 
     Route::get('edit/{id}', [BookController::class, 'edit']);
     Route::post('update/{id}', [BookController::class, 'update']);
     Route::delete('delete/{id}', [BookController::class, 'delete']);
+});
+Route::group(['prefix' => 'template', 'middleware' => 'auth:sanctum'], function () {
+    Route::get('/', [DesignDemoController::class, 'index']);
+    Route::post('store', [DesignDemoController::class, 'store']);
+    Route::get('edit/{id}', [DesignDemoController::class, 'edit']);
+    Route::post('update/{id}', [DesignDemoController::class, 'update']);
+    Route::delete('delete/{id}', [DesignDemoController::class, 'delete']);
 });
 /*
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

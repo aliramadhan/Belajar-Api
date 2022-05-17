@@ -20,6 +20,9 @@
                             <li class="nav-item">
                                 <router-link to="/books" class="nav-link">Books</router-link>
                             </li>
+                            <li class="nav-item">
+                                <router-link to="/template" class="nav-link">Design</router-link>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ name }}</a>
 

@@ -6,9 +6,14 @@ import Register from '../pages/Register';
 import Login from '../pages/Login';
 import Dashboard from '../pages/Dashboard';
 
+//import compoinent book
 import Books from '../components/Books/Index';
 import AddBook from '../components/Books/Create';
 import EditBook from '../components/Books/Edit';
+
+//import compoinent design
+import IndexDesign from '../components/DesignDemo/Index';
+import CreateDesign from '../components/DesignDemo/Create';
 
 export const routes = [
     {
@@ -36,6 +41,7 @@ export const routes = [
         path: '/dashboard',
         component: Dashboard
     },
+    //Route Books
     {
         name: 'books',
         path: '/books',
@@ -51,6 +57,17 @@ export const routes = [
         name: 'editbook',
         path: '/books/edit/:id',
         component: EditBook
+    },
+    //Route DesignDemo
+    {
+        name: 'indexDesign',
+        path: '/template',
+        component: IndexDesign,
+    },
+    {
+        name: 'CreateDesign',
+        path: '/template/create',
+        component: CreateDesign,
     },
 ];
 

@@ -19,6 +19,7 @@ class DesignDemoController extends Controller
     // store design
     public function store(Request $request)
     {	
+    	return response()->json($request->all());
         $validator = Validator::make($request->all(), [ 
             'name' => 'required|unique:design_demos',
             'file' => 'required|mimes:vue',

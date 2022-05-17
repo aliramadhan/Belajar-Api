@@ -23152,8 +23152,6 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.$axios.get('/sanctum/csrf-cookie').then(function (response) {
-        console.log(_this.design);
-
         _this.$axios.post('/api/template/store', _this.design).then(function (response) {
           if (response.status === 200) {
             console.log(response.data); //this.$router.push({name: 'design'});

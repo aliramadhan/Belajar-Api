@@ -49,20 +49,19 @@ export default {
         },
         StoreDesign() {
             this.$axios.get('/sanctum/csrf-cookie').then(response => {
-                console.log(this.design);
                 this.$axios.post('/api/template/store', this.design)
-                    .then(response => {
-                        if (response.status === 200) {
-                            console.log(response.data);
-                            //this.$router.push({name: 'design'});
-                        }
-                        else{
-                            this.errors = response.data.errors;
-                        }
-                    })
-                    .catch(function (error) {
-                        console.error(error);
-                    });
+                .then(response => {
+                    if (response.status === 200) {
+                        console.log(response.data);
+                        //this.$router.push({name: 'design'});
+                    }
+                    else{
+                        this.errors = response.data.errors;
+                    }
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
             })
         }
     },

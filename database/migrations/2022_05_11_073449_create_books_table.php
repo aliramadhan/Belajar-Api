@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('author');
+            $table->integer('created_by_user_id');
             $table->timestamps();
         });
     }

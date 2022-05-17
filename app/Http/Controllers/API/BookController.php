@@ -12,7 +12,7 @@ class BookController extends Controller
     // all books
     public function index()
     {
-        $books = Book::all()->toArray();
+        $books = Book::with('user')->get()->toArray();
         return array_reverse($books);
     }
 

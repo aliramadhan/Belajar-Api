@@ -10,6 +10,7 @@
                 <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">ID</th>
                 <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Name</th>
                 <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Author</th>
+                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Posted by</th>
                 <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Created At</th>
                 <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Updated At</th>
                 <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Actions</th>
@@ -31,6 +32,8 @@
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ book.id }}</td>
                 <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ book.name }}</td>
                 <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ book.author }}</td>
+                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap" v-if="book.user !== null">{{ book.user.name }}</td>
+                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap" v-else>Anonymous</td>
                 <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ moment(book.created_at).format('MMMM DD YYYY') }}</td>
                 <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ moment(book.updated_at).format('MMMM DD YYYY') }}</td>
                 <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
@@ -63,6 +66,7 @@ export default {
             this.$axios.get('/api/books')
                 .then(response => {
                     this.books = response.data;
+                    console.log(this.books);
                 })
                 .catch(function (error) {
                     console.error(error);

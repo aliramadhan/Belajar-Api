@@ -45,7 +45,7 @@ export default {
     },
     methods: {
         SelectedFile(e){
-            this.design.file = e.target.files[0];
+            this.design.file = e.target.files || e.dataTransfer.files;
         },
         StoreDesign() {
             this.$axios.get('/sanctum/csrf-cookie').then(response => {

@@ -23146,7 +23146,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     SelectedFile: function SelectedFile(e) {
-      this.design.file = e.target.files[0];
+      this.design.file = e.target.files || e.dataTransfer.files;
     },
     StoreDesign: function StoreDesign() {
       var _this = this;

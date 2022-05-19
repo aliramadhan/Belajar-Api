@@ -19,7 +19,6 @@ class DesignDemoController extends Controller
     // store design
     public function store(Request $request)
     {	
-    	return response()->json($request->all());
         $validator = Validator::make($request->all(), [ 
             'name' => 'required|unique:design_demos',
             'file' => 'required|mimes:vue',
@@ -32,16 +31,13 @@ class DesignDemoController extends Controller
                 'errors' => $validator->errors(),
             ],201);
         }
-        if ($request->file('file')) {
-        	//store and get filepath
-        	$filename = time().'_'.$request->file->getClientOriginalName();
-            $filepath = $request->file('file')->storeAs('uploads', $filename, 'public');
-            $design = new DesignDemo([
-	            'name' => $request->name,
-	            'filepath' => '/storage/'.$filepath
-	        ]);
-	        $design->save();
-        }
+    	//store and get filepath
+    	$filename = time().'_'.$request->file->getClientOriginalName();
+        $filepath = $request->file('file')->move('uploads', $filename, 'public');
+        $design = DesignDemo::create([
+            'name' => $request->name,
+            'filepath' => $filepath
+        ]);
         
 
         return response()->json('The Design successfully added');

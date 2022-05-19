@@ -6,6 +6,7 @@
             <tr>
                 <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">ID</th>
                 <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Name</th>
+                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">IMG</th>
                 <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Actions</th>
             </tr>
             </thead>
@@ -21,9 +22,10 @@
                     </button>
                 </td>
             </tr>
-            <tr v-for="design in designs" :key="book.id" class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
+            <tr v-for="design in designs" :key="design.id" class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ design.id }}</td>
                 <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ design.name }}</td>
+                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"><img width="200" :src="design.filepath"></td>
                 <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                     <div class="btn-group" role="group">
                         <router-link :to="{name: 'editbook', params: { id: design.id }}" class="btn btn-primary">Edit

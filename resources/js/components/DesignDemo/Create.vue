@@ -37,8 +37,8 @@ export default {
     data() {
         return {
             design: {
-                name: null,
-                file: null
+                name: '',
+                file: []
             },
             errors: []
         }
@@ -48,14 +48,26 @@ export default {
             this.design.file = e.target.files || e.dataTransfer.files;
         },
         StoreDesign() {
+            //config
+            const config = {
+                headers: {
+                    'content-type': 'multipart/form-data',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                }
+            }
+            // form data
+            let formData = new FormData();
+            formData.append('name', this.design.name);
+            formData.append('file', this.design.file[0]);
             this.$axios.get('/sanctum/csrf-cookie').then(response => {
-                this.$axios.post('/api/template/store', this.design)
-                .then(response => {
+                this.$axios.post('/api/template/store', formData, config)
+                    .then(response => {
                     if (response.status === 200) {
                         console.log(response.data);
                         //this.$router.push({name: 'design'});
                     }
                     else{
+                        console.log(response);
                         this.errors = response.data.errors;
                     }
                 })

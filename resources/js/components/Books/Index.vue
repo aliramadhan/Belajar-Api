@@ -17,7 +17,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-if="!books.length" class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
+            <tr v-if="!Array.isArray(books)" class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
                 <td colspan="7" class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                     <button type="button" class="flex mx-auto items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-indigo-500 hover:bg-indigo-400 transition ease-in-out duration-150 cursor-not-allowed" disabled>
                       <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -44,6 +44,10 @@
                     </div>
                 </td>
             </tr>
+            <!-- if empty -->
+            <tr v-if="Array.isArray(books) && books.length < 1" class="text-center bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
+                <td colspan="7" class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">Empty Data</td>
+            </tr>
             </tbody>
         </table>
 
@@ -57,7 +61,7 @@ export default {
     props: ["success"],
     data() {
         return {
-            books: [],
+            books: null,
             moment: moment
         }
     },

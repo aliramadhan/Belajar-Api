@@ -10,10 +10,10 @@
                       <div class="flex flex-wrap">
                         <div class="relative w-full pr-4 max-w-full flex-grow flex-1">
                           <h5 class="text-blueGray-400 uppercase font-bold text-xs">
-                            Traffic
+                            Timer 
                           </h5>
                           <span class="font-semibold text-xl text-blueGray-700">
-                            350,897
+                            {{ toDate }}
                           </span>
                         </div>
                         <div class="relative w-auto pl-4 flex-initial">
@@ -512,6 +512,8 @@ export default {
     data() {
         return {
             name: null,
+            timer: 0,
+            time_convert: ''
         }
     },
     created() {
@@ -524,6 +526,24 @@ export default {
             window.location.href = "/";
         }
         next();
+    },
+    watch: {
+      timer: {
+          handler(value) {
+            setTimeout(() => {
+                this.timer++;
+
+            }, 1000);
+          },
+          immediate: true // This ensures the watcher is triggered upon creation
+      }
+    },
+    computed:{
+      toDate(){
+        var hours = Math.floor(this.timer / 60);  
+        var minutes = this.timer % 60;
+        return hours + " : " + minutes; 
+      }
     }
 }
 </script>

@@ -60,7 +60,6 @@ export default {
             this.$axios.get('/api/template')
                 .then(response => {
                     this.designs = response.data;
-                    console.log(this.designs);
                 })
                 .catch(function (error) {
                     console.error(error);

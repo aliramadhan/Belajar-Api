@@ -30,6 +30,8 @@
                     <div class="btn-group" role="group">
                         <router-link :to="{name: 'editbook', params: { id: design.id }}" class="btn btn-primary">Edit
                         </router-link>
+                        <router-link :to="{name: 'demo', params: { name: design.name }}" class="btn btn-primary">See
+                        </router-link>
                         <button class="btn btn-danger" @click="deleteBook(design.id)">Delete</button>
                     </div>
                 </td>

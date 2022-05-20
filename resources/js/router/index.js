@@ -5,6 +5,7 @@ import About from '../pages/About';
 import Register from '../pages/Register';
 import Login from '../pages/Login';
 import Dashboard from '../pages/Dashboard';
+import Demo from '../pages/Demo';
 
 //import compoinent book
 import Books from '../components/Books/Index';
@@ -40,6 +41,11 @@ export const routes = [
         name: 'dashboard',
         path: '/dashboard',
         component: Dashboard
+    },
+    {
+        name: 'demo',
+        path: '/demo/:name',
+        component: Demo
     },
     //Route Books
     {

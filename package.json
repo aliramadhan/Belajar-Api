@@ -27,6 +27,7 @@
     "dependencies": {
         "autoprefixer": "10.4.5",
         "moment": "^2.29.3",
+        "request": "^2.79.0",
         "vue-router": "^4.0.13"
     }
 }

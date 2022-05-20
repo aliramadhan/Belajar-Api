@@ -30,11 +30,13 @@ Route::group(['prefix' => 'books', 'middleware' => 'auth:sanctum'], function () 
 });
 Route::group(['prefix' => 'template', 'middleware' => 'auth:sanctum'], function () {
     Route::get('/', [DesignDemoController::class, 'index']);
+    Route::get('/get-demo/{demo}', [DesignDemoController::class, 'getDemo']);
     Route::post('store', [DesignDemoController::class, 'store']);
     Route::get('edit/{id}', [DesignDemoController::class, 'edit']);
     Route::post('update/{id}', [DesignDemoController::class, 'update']);
     Route::delete('delete/{id}', [DesignDemoController::class, 'delete']);
 });
+
 /*
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

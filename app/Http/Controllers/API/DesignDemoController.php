@@ -21,7 +21,7 @@ class DesignDemoController extends Controller
     {	
         $validator = Validator::make($request->all(), [ 
             'name' => 'required|unique:design_demos',
-            'file' => 'required|mimes:vue',
+            'file' => 'required',
         ],[
             'name.required' => 'The Template name field is required.',
             'name.unique' => 'The Template name has already been taken.',
@@ -31,16 +31,25 @@ class DesignDemoController extends Controller
                 'errors' => $validator->errors(),
             ],201);
         }
+        if ($request->file->getClientOriginalExtension() != 'vue') {
+            return response()->json([
+                'errors' => ['file' => 'The file must be a file of type: vue.'],
+            ],201);
+        }
     	//store and get filepath
     	$filename = time().'_'.$request->file->getClientOriginalName();
-        $filepath = $request->file('file')->move('uploads', $filename, 'public');
+        $filepath = $request->file('file')->move(resource_path('js/components/Uploads/'), $filename);
         $design = DesignDemo::create([
             'name' => $request->name,
-            'filepath' => $filepath
+            'filepath' => 'components/Uploads/'.$filename
         ]);
         
 
         return response()->json('The Design successfully added');
+    }
+    public function getDemo($demo){
+    	$demo = DesignDemo::where('name',$demo)->first()->toArray();
+    	return response()->json($demo);
     }
 
     // edit design
